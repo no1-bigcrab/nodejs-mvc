@@ -9,10 +9,8 @@ function addUser( user ){
         var query = conn.query('INSERT INTO user SET ?', user, function (error, result) {
            if ( error ) {
                defer.reject( error );
-               console.log(error);
            } else {
                defer.resolve( result );
-               console.log(result);
            }
         });
 
@@ -20,6 +18,24 @@ function addUser( user ){
     }
     return false;
 }
+//check trùng email
+function getUserByEmail( email ) {
+    if (email) {
+        var defer = q.defer();
+
+        var query = conn.query('SELECT * FROM user WHERE ?', {email: email}, function( err, result){
+            if (err) {
+                defer.reject(err);
+                console.log(err)
+            }
+            else{
+                defer.resolve(result);
+            }
+        });
+        return defer.promise;
+    }
+}
 module.exports = {
-    addUser : addUser
+    addUser : addUser,
+    getUserByEmail : getUserByEmail
 }

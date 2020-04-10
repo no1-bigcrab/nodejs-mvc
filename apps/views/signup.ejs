@@ -20,10 +20,11 @@
                             <form id="signupform" class="form-horizontal" role="form" method="POST" action="/admin/signup">
                                 
                             <div id="signupalert" style="<% if(!data ||!data.error){%>display: none;<%}%>" class="alert alert-danger">
-                                <p>Error:</p>
-                                <% if(data && data.error) {%> 
-                                 <span><%= data.error  %> </span>   
-                                <% } %> 
+                                <p>Error: <% if(data && data.error) {%> 
+                                    <span><%= data.error  %> </span>   
+                                   <% } %> 
+                            </p>
+                                
                             </div>
                                     
                                 <div class="form-group">

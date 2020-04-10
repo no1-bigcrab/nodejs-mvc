@@ -31,7 +31,7 @@ align-content: center;
 }
 
 .card{
-height: 300px;
+height: 350px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
@@ -117,7 +117,7 @@ margin-left: 4px;
 				</div>
 			</div>
 			<div class="card-body">
-				<form>
+				<form method="POST" action="/admin/signin">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -133,6 +133,12 @@ margin-left: 4px;
 					</div>
 					<div class="form-group text-center">
 						<input type="submit" value="Login" class="btn text-center login_btn">
+					</div>
+					<div id="signupalert" style="<% if(!data ||!data.error){%>display: none;<%}%>" class="alert alert-danger">
+						<p>Error: <% if(data && data.error) {%> 
+							<span><%= data.error  %> </span>   
+						   <% } %> 
+						</p>
 					</div>
 				</form>
 			</div>

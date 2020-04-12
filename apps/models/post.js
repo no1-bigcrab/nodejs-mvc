@@ -22,11 +22,13 @@ function addPost( post ){
     if( post ){
         //console.log(user);
         var defer = q.defer();
-        var query = conn.query('SELECT * FROM posts WHERE ?', post, function (error, result) {
+        var query = conn.query('INSERT INTO posts SET ?', post, function (error, result) {
            if ( error ) {
                defer.reject( error );
+               //console.log(error);
            } else {
                defer.resolve( result );
+               //console.log(result);
            }
         });
 
@@ -68,9 +70,25 @@ function updatePost( params ){
     return false;
 }
 
+function deletePost(post_id){
+    if( post_id ){
+        var defer = q.defer();
+        var query = conn.query('DELETE FROM posts WHERE id=?', [ post_id ], function (error, result) {
+           if ( error ) {
+               defer.reject( error );
+           } else {
+               defer.resolve( result );
+           }
+        });
+
+        return defer.promise;
+    }
+    return false;
+}
 module.exports = {
     getAllPosts : getAllPosts,
     addPost : addPost,
     getPostById : getPostById,
-    updatePost : updatePost
+    updatePost : updatePost,
+    deletePost : deletePost
 }

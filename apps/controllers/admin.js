@@ -137,13 +137,16 @@ router.post("/post/new", function(req, res){
         params.updated_at = now;
     
         var data = posts_md.addPost(params);
-    
-        data.then(function (result) {
-           res.redirect("/admin");
-    
-        }).catch( function (err) {
-            res.render( "signup",{ data: { error : " Could not insert user data." } } );
-        });
+        if ( data ) {
+            //console.log(data);
+            data.then(function (result) {
+                res.redirect("/admin");
+        
+            }).catch( function (err) {
+                res.render( "admin/post/new",{ data: { error : " Could not insert user data." } } );
+            });
+        }
+        
     }
    
     
@@ -193,4 +196,25 @@ router.put("/post/edit", function(req, res){
    }
 });
 
+//delete post
+router.delete("/post/delete", function(req, res){
+   var post_id = req.body.id;
+   var data = posts_md.deletePost(post_id);
+
+    if ( !data ) {
+        res.json({status_code : 500});
+
+    } else {
+
+        data.then( function(result){
+
+            res.json({status_code : 200});
+
+        }).catch( function(err){
+
+            res.json({status_code : 500});
+
+        });
+    }
+ });
 module.exports = router;

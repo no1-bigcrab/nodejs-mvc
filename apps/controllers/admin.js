@@ -1,13 +1,32 @@
 var express =  require("express");
 var router = express.Router();
+
+// connect
 var user_md = require("../models/user");
+var posts_md = require("../models/post");
+
 var helper = require("../helpers/helper");
 
 router.get("/", function(req, res){
-    res.json({"message":"This is Admin page"});
+    
+    var data = posts_md.getAllPosts();
+
+    data.then(function(posts){
+        var data = {
+            posts : posts,
+            error : false
+        };
+        
+        res.render("admin/dashboard", { data : data });
+
+    }).catch(function(error){
+
+        res.render("admin/dashboard", {data : {error : "Get posts data error"}});
+
+    });
 });
 
-//post sinup
+//get sinup
 
 router.get("/signup", function(req, res){
     res.render("signup", {data: {}});
@@ -66,13 +85,13 @@ router.get("/signin", function(req, res){
 router.post("/signin", function(req, res){
     var params = req.body;
     //console.log(params.email.length);
-    if( params.email.length == 0  ){
+    if( params.email.length == 0  ) {
         res.render("signin",{ data: { error : "Email requied" }});
     }
-    else if( params.password.length = 0 ){
+    else if( params.password.length = 0 ) {
         res.render("signin",{ data: { error : "Password requied" }});
     }
-    else{
+    else {
         var data = user_md.getUserByEmail( params.email );
         //
         if ( data ) {
@@ -93,6 +112,85 @@ router.post("/signin", function(req, res){
             res.render("signin",{ data: { error : "Email not exist." }});
         }
     }
+});
+
+// add get new posts
+router.get("/post/new", function(req, res){
+    res.render("admin/post/new", {data: { error : false }});
+});
+// add post new posts
+router.post("/post/new", function(req, res){
+    var params = req.body;
+
+    if( params.title.trim().length == 0  ) {
+        res.render("admin/post/new", { data: { error : "Title requied" }});
+    }
+    else if( params.content.trim().length == 0 ) {
+        res.render("admin/post/new", { data: { error : "Content requied" }});
+    }
+    else if( params.author.trim().length == 0 ) {
+        res.render("admin/post/new", { data: { error : "Author requied" }});
+    }
+    else {
+        var now = new Date();
+        params.created_at = now;
+        params.updated_at = now;
+    
+        var data = posts_md.addPost(params);
+    
+        data.then(function (result) {
+           res.redirect("/admin");
+    
+        }).catch( function (err) {
+            res.render( "signup",{ data: { error : " Could not insert user data." } } );
+        });
+    }
+   
+    
+});
+//get edit post
+router.get("/post/edit/:id", function(req, res){
+    var params = req.params;
+    var id = params.id;
+    var data = posts_md.getPostById(id);
+    if ( data ) {
+        data.then(function (results) {
+            var post = results[0];
+            var data = {
+                post : post,
+                error : false
+            }
+            res.render("admin/post/edit", {data : data});
+     
+         }).catch( function (err) {
+             var data = {
+                 error :" Could not get post  By id."
+             }
+             res.render("admin/post/edit", {data : data});
+         });
+    } else {
+        var data = {
+            error :" Could not get post  By id."
+        }
+        res.render("admin/post/edit", {data : data});
+    }
+    
+});
+// post edit post.abs
+router.put("/post/edit", function(req, res){
+   var params = req.body;
+//    console.log(params);
+
+   var data = posts_md.updatePost(params);
+   if ( !data ) {
+       res.json({status_code : 500});
+   } else {
+        data.then( function(result){
+            res.json({status_code : 200});
+        }).catch( function(err){
+            res.json({status_code : 500});
+        })
+   }
 });
 
 module.exports = router;

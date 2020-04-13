@@ -15,7 +15,7 @@ app.use(session({
   secret: config.get("secret_key"),
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }))
 
 // set ejs

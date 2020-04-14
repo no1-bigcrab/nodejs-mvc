@@ -37,8 +37,8 @@
                                 <% for( var i = 0; i < data.posts.length; i++ ) { %> 
                                     <tr>
                                         <td><%= data.posts[i].id %> </td>
-                                        <td><%= data.posts[i].title %> </td>
-                                        <td><%= data.posts[i].content %> </td>
+                                        <td><%- data.posts[i].title %> </td>
+                                        <td><%- data.posts[i].content %> </td>
                                         <td><%= data.posts[i].author %> </td>
                                         <td><%= data.posts[i].created_at %> </td>
                                         <td><%= data.posts[i].updated_at %> </td>

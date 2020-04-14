@@ -15,7 +15,7 @@ app.use(session({
   secret: config.get("secret_key"),
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }))
 
 // set ejs
@@ -23,7 +23,7 @@ app.set("views", __dirname + "/apps/views");
 app.set("view engine", "ejs");
 
 //static folder
-app.use("/static", express.static(__dirname + "./public"));
+app.use("/static", express.static(__dirname + '/public'));
 
 var controllers = require(__dirname + "/apps/controllers");
 

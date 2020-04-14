@@ -35,7 +35,23 @@ function getUserByEmail( email ) {
         return defer.promise;
     }
 }
+// lấy tất cả user:
+function getAllUsers(){
+    var defer = q.defer();
+
+    var query = conn.query('SELECT * FROM user', function( err, result){
+        if (err) {
+            defer.reject(err);
+            console.log(err)
+        }
+        else{
+            defer.resolve(result);
+        }
+    });
+    return defer.promise;
+}
 module.exports = {
     addUser : addUser,
-    getUserByEmail : getUserByEmail
+    getUserByEmail : getUserByEmail,
+    getAllUsers : getAllUsers
 }

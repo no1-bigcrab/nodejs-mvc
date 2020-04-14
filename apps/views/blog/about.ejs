@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Tech Blog</title>
+  <title>My Tech Blog - Page ABOUT</title>
 
   <!-- Bootstrap core CSS -->
   <link href="/static/theme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,7 +37,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/bloc">Home</a>
+            <a class="nav-link" href="/blog">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/blog/about">About</a>
@@ -49,16 +49,15 @@
       </div>
     </div>
   </nav>
-
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('/static/theme/img/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('/static/theme/img/about-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>My Tech Blog</h1>
-            <span class="subheading">The most technology for you BIGCRAB</span>
+          <div class="page-heading">
+            <h1>About Me</h1>
+            <span class="subheading">This is what I do.</span>
           </div>
         </div>
       </div>
@@ -68,34 +67,10 @@
   <!-- Main Content -->
   <div class="container">
     <div class="row">
-      <% if( data && data.error) {%> 
-          <div class="alert alert-danger col-sm-12">
-              <%= data.error %> 
-          </div>
-      <% } %> 
       <div class="col-lg-8 col-md-10 mx-auto">
-          <% if(data && data.posts) {%> 
-            <% for(var i =0; i< data.posts.length; i++) {%> 
-              <div class="post-preview">
-                <a href="blog/post/<%- data.posts[i].id %>">
-                  <h2 class="post-title">
-                    <%- data.posts[i].title %>
-                  </h2>
-                  <h3 class="post-subtitle">
-                    <%- data.posts[i].content %>
-                  </h3>
-                </a>
-                <p class="post-meta">Posted by
-                  <a href="#"><%= data.posts[i].author %></a>
-                  on <%- data.posts[i].created_at %></p>
-              </div>
-              <hr>
-            <% } %>
-        <% } %>  
-        <!-- Pager -->
-        <!-- <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div> -->
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut consequuntur magnam, excepturi aliquid ex itaque esse est vero natus quae optio aperiam soluta voluptatibus corporis atque iste neque sit tempora!</p>
       </div>
     </div>
   </div>
@@ -133,7 +108,7 @@
               </a>
             </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy; BIGCRAB</p>
+          <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
         </div>
       </div>
     </div>

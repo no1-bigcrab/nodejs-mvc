@@ -3,8 +3,6 @@ var config = require("config");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 
-var socketio = require("socket.io");
-
 var app = express();
 
 // body-parser
@@ -34,8 +32,27 @@ app.use(controllers);
 var host = config.get("server.host");
 var port = config.get("server.port");
 
-var server = app.listen(port, host, function(){
+var serve = app.listen(port, host, function(){
     console.log("Server iss runing", port);
 });
 
-var io = socketio(server);
+var io = require('socket.io')(serve);
+
+const users = {};
+io.on('connection', socket => {
+    socket.on('new-user', name => {
+        users[socket.id] = name;
+
+        socket.broadcast.emit('user-connected', name);
+    })
+
+    socket.on('send-chat-message', message => {
+        socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
+    });
+  
+    socket.on('disconnect', () => {
+      socket.broadcast.emit('user-disconnected', users[socket.id]);
+      delete users[socket.id];
+  })
+});
+

@@ -11,6 +11,9 @@
       #message-container { list-style-type: none; margin: 0; padding: 0; }
       #messamessage-containerges li { padding: 5px 10px; }
       #message-container li:nth-child(odd) { background: #eee; }
+      .name-connect{
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -34,7 +37,7 @@
         socket.emit('new-user', name);
 
         socket.on('user-connected', name => {
-          appendMessage(`${name} connected`);
+          appendMessage(`${name} connected!`);
         });
 
         socket.on('user-disconnected', name => {
